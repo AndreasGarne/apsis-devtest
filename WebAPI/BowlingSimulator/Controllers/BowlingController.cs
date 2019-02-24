@@ -10,13 +10,13 @@ using System.Web.Http.Cors;
 
 namespace BowlingSimulator.Controllers
 {
-    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class BowlingController : ApiController
     {
         private Game game;
         private GameRecord games;
         [HttpPost]
-        public HttpResponseMessage NewGame([FromBody]JObject player)
+        public HttpResponseMessage NewGame([FromBody]Player player)
         {
             games = new GameRecord();
 
@@ -24,7 +24,7 @@ namespace BowlingSimulator.Controllers
 
             try
             {
-                game = games.AddGame(player["name"].ToString());
+                game = games.AddGame(player.Name);
             }
             catch(Exception e)
             {

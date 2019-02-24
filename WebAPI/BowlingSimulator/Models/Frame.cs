@@ -12,11 +12,10 @@ namespace BowlingSimulator.Models
         private int roll3;
         private int score;
 
-        public Frame(int roll1, int roll2, int score)
+        public Frame(int roll1, int roll2)
         {
             this.Roll1 = roll1;
             this.Roll2 = roll2;
-            this.Score = score;
         }
 
         public int Roll1

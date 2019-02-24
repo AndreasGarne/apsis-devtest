@@ -190,6 +190,7 @@
     <Compile Include="Models\Frame.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\GameRecord.cs" />
+    <Compile Include="Models\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

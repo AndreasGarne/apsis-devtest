@@ -14,7 +14,7 @@ export class BowlingService {
 
   startNewGame(player)
   {
-    return this.http.post(this.baseHref + '/api/bowling/newgame/',{name:player});
+    return this.http.post(this.baseHref + '/api/bowling/newgame/',{name:player,greatness:"virtuoso"});
   }
 
   addFrame(gameId,bowls)

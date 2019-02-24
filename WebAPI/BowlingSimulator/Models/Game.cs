@@ -107,6 +107,7 @@ namespace BowlingSimulator.Models
 
         private void ValidatePlayerName(string player)
         {
+            player = player == null ? "Badger" : player;
             if (!Regex.IsMatch(player, @"^[a-zA-Z0-9_]+$"))
                 throw new ArgumentException("Invalid player name, A-Z a-z 0-9 _ only");
             if(player.Length > 20 || player.Length < 5)

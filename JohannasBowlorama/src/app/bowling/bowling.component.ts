@@ -18,6 +18,7 @@ export class BowlingComponent implements OnInit {
   showthirdInput: boolean = false;
   showModal: boolean = false;
   showNewGameModal: boolean = false;
+  showErrorModal: boolean = false;
   errorText:string = "";
   playerName: string = "";
 
@@ -39,6 +40,7 @@ export class BowlingComponent implements OnInit {
           this.game = data;
           this.game.Frames = this.prettifyData(this.game.Frames);
           this.showModal = false;
+          this.playerName = "";
         },
         err => {
           this.showModal = false;
@@ -47,6 +49,7 @@ export class BowlingComponent implements OnInit {
             this.errorText = err.error.Message;
           else
             this.errorText = err.error;
+          console.log(err);
         }
       );
   }
