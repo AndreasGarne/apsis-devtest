@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace BowlingSimulator.Models
@@ -8,22 +9,27 @@ namespace BowlingSimulator.Models
     public class Game
     {
         private string id;
+        private string player;
         private List<Frame> frames;
         private int totalScore;
         private int framesPerGame = 10;
 
-        public Game()
+        public Game(string player)
         {
+            ValidatePlayerName(player);
+
+            this.Player = player;
             this.Id = Guid.NewGuid().ToString();
             this.Frames = new List<Frame>();
             this.TotalScore = 0;
         }
 
         public string Id { get { return this.id; } set { this.id = value; } }
+        public string Player { get { return this.player; } set { this.player = value; } }
         public List<Frame> Frames { get { return this.frames; } set { this.frames = value; } }
         public int TotalScore { get { return this.totalScore; } set { this.totalScore = value; } }
 
-        internal void AddFrame(Frame frame)
+        public void AddFrame(Frame frame)
         {
             if (Frames.Count == 10)
                 throw new Exception("The game is over");
@@ -83,7 +89,7 @@ namespace BowlingSimulator.Models
 
         private int CalculateSpare(int index)
         {
-            var score = 10;
+            var score = 0;
 
             try
             {
@@ -99,20 +105,27 @@ namespace BowlingSimulator.Models
             return score;
         }
 
+        private void ValidatePlayerName(string player)
+        {
+            if (!Regex.IsMatch(player, @"^[a-zA-Z0-9_]+$"))
+                throw new ArgumentException("Invalid player name, A-Z a-z 0-9 _ only");
+            if(player.Length > 20 || player.Length < 5)
+                throw new ArgumentException("Invalid player name, 5 - 20 characters");
+        }
         private void ValidateFirstRoll(int roll)
         {
             if(roll < 0 || roll > 10)
-                throw new ArgumentOutOfRangeException("Roll 1 out of range");
+                throw new ArgumentException("Roll 1 out of range");
         }
 
         private void ValidateSecondRoll(int roll1, int roll2)
         {
             if (roll2 < 0 || roll2 > 10)
-                throw new ArgumentOutOfRangeException("Roll 2 out of range");
+                throw new ArgumentException("Roll 2 out of range");
             if (roll1 + roll2 > 10 && frames.Count < 9)
-                throw new ArgumentOutOfRangeException("Can't take down more than 10 pins");
+                throw new ArgumentException("Can't take down more than 10 pins");
             if (roll1 + roll2 > 10 && roll1 != 10)
-                throw new ArgumentOutOfRangeException("Roll 2 out of range");
+                throw new ArgumentException("Roll 2 out of range");
         }
 
         private void ValidateThirdRoll(int roll1, int roll2, int roll3)
@@ -120,11 +133,11 @@ namespace BowlingSimulator.Models
             if (roll3 == 0)
                 return;
             if (Frames.Count < 9)
-                throw new ArgumentOutOfRangeException("Can't do a 3rd roll outside of 10th frame");
+                throw new ArgumentException("Can't do a 3rd roll outside of 10th frame");
             if (roll3 < 0 || roll3 > 10)
-                throw new ArgumentOutOfRangeException("Roll 3 out of range");
+                throw new ArgumentException("Roll 3 out of range");
             if(roll1 + roll2 < 10)
-                throw new ArgumentOutOfRangeException("Roll 3 not allowed");
+                throw new ArgumentException("Roll 3 not allowed");
         }
     }
 }

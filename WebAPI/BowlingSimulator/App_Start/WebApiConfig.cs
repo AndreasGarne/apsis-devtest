@@ -11,20 +11,26 @@ namespace BowlingSimulator
         {
             // Web API configuration and services
 
+            config.EnableCors();
             // Web API routes
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
                 name: "ActionApi",
-                routeTemplate: "api/{controller}/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                routeTemplate: "api/{controller}/{action}"
             );
 
             config.Routes.MapHttpRoute(
+                name: "ActionApiGame",
+                routeTemplate: "api/{controller}/{gameId}/{action}"
+            );
+
+
+            /*config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
-            );
+            );*/
 
         }
     }

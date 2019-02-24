@@ -26,19 +26,19 @@ namespace BowlingSimulator.Models
             }
         }
 
-        internal Game FindGameByGameId(string gameId)
+        public Game FindGameByGameId(string gameId)
         {
             return games.Find(x => x.Id == gameId);
         }
 
-        internal string AddGame()
+        public Game AddGame(string player)
         {
-            var game = new Game();
+            var game = new Game(player);
             this.games.Add(game);
 
             Save();
 
-            return game.Id;
+            return game;
         }
 
         public void Save()
